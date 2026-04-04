@@ -6,9 +6,10 @@ class Coordinator
     private:
     std::map<size_t, Node> nodes;
     size_t n;
-    size_t r_quorum;
-    size_t w_quorum;
+    size_t rQuorum;
+    size_t wQuorum;
 
     public:
-    Coordinator(size_t n, size_t r_quorum, size_t w_quorum);
+    Coordinator(size_t n, size_t rQuorum, size_t wQuorum);
+    add
 };
