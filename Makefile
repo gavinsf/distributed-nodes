@@ -1,4 +1,8 @@
+export MAKEFLAGS += --no-print-directory
+
+all: run
+
 run:
 	cmake -S . -B build
 	cmake --build build
-	./build/server
+	./build/distributed-nodes
