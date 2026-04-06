@@ -2,10 +2,10 @@
 #include "TcpConnection.h"
 
 tcp_server::tcp_server(asio::io_context& io_context, size_t port)
-    :  io_context(io_context);
-       acceptor_(io_context, tcp::endpoint(tcp::v4(), port))
+    :  io_context(io_context),
+       acceptor(io_context, tcp::endpoint(tcp::v4(), port))
 {
-
+    listener();
 }
 
 void tcp_server::listener()
@@ -14,7 +14,7 @@ void tcp_server::listener()
         tcp_connection::create(io_context);
     
     acceptor.async_accept(new_connection->socket(),
-        std::bind(&tcp_server::handle_accept, this, new_connection,
+        std::bind(&tcp_server::handler, this, new_connection,
             asio::placeholders::error));
 }
 
@@ -22,7 +22,7 @@ void tcp_server::handler(tcp_connection::pointer new_connection, const std::erro
 {
     if (!error)
     {
-        new_connection->start();
+        new_connection->start("TEMPORARY");
     }
 
     listener();

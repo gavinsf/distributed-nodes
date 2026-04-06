@@ -1,3 +1,5 @@
+#pragma once
+
 #include <memory>
 #include <asio.hpp>
 #include <string>
@@ -5,7 +7,7 @@
 using asio::ip::tcp;
 
 class tcp_connection
-    : public std::enabled_shared_from_this<tcp_connection>
+    : public std::enable_shared_from_this<tcp_connection>
 {
     private:
     tcp::socket socket_;
@@ -19,3 +21,4 @@ class tcp_connection
     tcp::socket& socket();
     void start(std::string message);
 };
+
