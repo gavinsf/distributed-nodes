@@ -15,10 +15,14 @@ target_compile_definitions(asio_local INTERFACE ASIO_STANDALONE)
 set(SOURCE_FILES
     main.cpp
     Node.cpp
+    TcpConnection.cpp
+    TcpServer.cpp
 )
 
 set(HEADER_FILES
     Node.h
+    TcpConnection.h
+    TcpServer.h
 )
 
 add_executable(distributed-nodes ${SOURCE_FILES} ${HEADER_FILES})
