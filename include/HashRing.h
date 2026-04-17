@@ -10,10 +10,11 @@ class hash_ring
     std::map<int, size_t> ring;
     size_t replicas;
     int get_hash(std::string_view str);
-    size_t find_next_node(int hash);
+    int next_node(int hash);
 
     public:
     hash_ring(size_t replicas);
-    void add_node(const string& node);
+    void add_node(const size_t& node);
     size_t add_key_value(std::string key, std::string value);
+    size_t get_size();
 };
