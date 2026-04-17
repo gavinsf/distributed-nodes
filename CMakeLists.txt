@@ -4,30 +4,23 @@ project(distributed-nodes LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_library(asio_local INTERFACE)
+include(GNUInstallDirs)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY
+  ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY
+  ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY
+  ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR})
 
-target_include_directories(asio_local INTERFACE 
-    "${CMAKE_CURRENT_SOURCE_DIR}/external/asio-1.36.0/include"
+include(FetchContent)
+FetchContent_Declare(
+  googletest
+  URL https://github.com/google/googletest/archive/refs/heads/main.zip
 )
+FetchContent_MakeAvailable(googletest)
 
-target_compile_definitions(asio_local INTERFACE ASIO_STANDALONE)
+add_subdirectory(external)
+add_subdirectory(src)
 
-set(SOURCE_FILES
-    main.cpp
-    Node.cpp
-    TcpConnection.cpp
-    TcpServer.cpp
-)
-
-set(HEADER_FILES
-    Node.h
-    TcpConnection.h
-    TcpServer.h
-)
-
-add_executable(distributed-nodes ${SOURCE_FILES} ${HEADER_FILES})
-
-target_link_libraries(distributed-nodes PRIVATE asio_local)
-
-find_package(Threads REQUIRED)
-target_link_libraries(distributed-nodes PRIVATE Threads::Threads)
+enable_testing()
+add_subdirectory(tests)
