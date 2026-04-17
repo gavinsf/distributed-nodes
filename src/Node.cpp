@@ -14,7 +14,11 @@ node::node(size_t id, size_t port, size_t n, size_t r_quorum, size_t w_quorum)
       context()
 {
     auto work = asio::make_work_guard(context);
-    start();
+}
+
+node::~node()
+{
+    context.stop();
 }
 
 void node::start()
@@ -22,4 +26,3 @@ void node::start()
     server = std::make_unique<tcp_server>(context, port);
     context.run();
 }
-
