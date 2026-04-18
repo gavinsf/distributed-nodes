@@ -1,5 +1,6 @@
 add_executable(Tests
     TestHashRing.cpp
+    TestNode.cpp
 )
 target_link_libraries(Tests
   PRIVATE
