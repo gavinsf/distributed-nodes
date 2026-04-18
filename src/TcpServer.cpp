@@ -1,11 +1,20 @@
 #include "TcpServer.h"
 #include "TcpConnection.h"
 
-tcp_server::tcp_server(asio::io_context& io_context, size_t port)
+tcp_server::tcp_server(asio::io_context& io_context, size_t port_)
     :  io_context(io_context),
-       acceptor(io_context, tcp::endpoint(tcp::v4(), port))
+       acceptor(io_context, tcp::endpoint(tcp::v4(), port_))
 {
+    port = acceptor.local_endpoint().port();
     listener();
+}
+
+tcp_server::~tcp_server()
+{
+    asio::error_code ec;
+
+    acceptor.cancel(ec);
+    acceptor.close(ec);
 }
 
 void tcp_server::listener()
@@ -26,4 +35,9 @@ void tcp_server::handler(tcp_connection::pointer new_connection, const std::erro
     }
 
     listener();
+}
+
+size_t tcp_server::get_port()
+{
+    return port;
 }
