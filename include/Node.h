@@ -19,9 +19,12 @@ class node
     size_t n;
     size_t r_quorum;
     size_t w_quorum;
-    std::unique_ptr<tcp_server> server;
+    std::unique_ptr<tcp_server> p_server;
+
 
     public:
-    node(size_t id, size_t port, size_t n, size_t r_quorum, size_t w_quorum);
+    node(size_t id, size_t n, size_t r_quorum, size_t w_quorum);
+    ~node();
     void start();
+    size_t get_port();
 };
