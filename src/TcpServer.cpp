@@ -22,9 +22,9 @@ asio::awaitable<void> listener()
 {
     for (;;)
     {
-    std::make_shared<chat_session>(
+    std::make_shared<tcp_connection>(
         co_await acceptor.async_accept(use_awaitable),
-        room
+        *this
       )->start();
     }
 }
