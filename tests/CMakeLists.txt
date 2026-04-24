@@ -1,6 +1,7 @@
 add_executable(Tests
     TestHashRing.cpp
     TestNode.cpp
+    TestTcpServer.cpp
 )
 target_link_libraries(Tests
   PRIVATE
