@@ -2,18 +2,21 @@
 
 #include <asio.hpp>
 #include "TcpServer.h"
+#include <memory>
 
 
 class tcp_connection
-    : std::enable_from_shared_this<tcp_connection>
+    : public std::enable_shared_from_this<tcp_connection>
 {
     private:
-    tcp::socket socket_
-    asio::io_context context_
-    awaitable<void> reader();
+    asio::io_context context_;
+    tcp::socket socket_;
+    tcp_server& server_;
+    asio::awaitable<void> reader();
     void stop();
-    tcp_connection(tcp::socket socket_, tcp_server& server);
+    
 
     public:
     void start();
-}
+    tcp_connection(tcp::socket socket, tcp_server& server);
+};
